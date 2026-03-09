@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Nexis | Premium Inventory Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-main: #030305;
+            --bg-surface: rgba(20, 20, 25, 0.6);
+            --gold-primary: #D4AF37;
+            --gold-light: #F3CE6D;
+            --gold-dark: #AA8B2B;
+            --gold-gradient: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --border-light: rgba(212, 175, 55, 0.15);
+            --glow: rgba(212, 175, 55, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.05), transparent 25%);
+        }
+
+        /* Glassmorphism Navbar */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(3, 3, 5, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--gold-light);
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--gold-primary);
+            padding: 10px 24px;
+            border-radius: 50px;
+            color: var(--gold-primary) !important;
+        }
+
+        .nav-btn:hover {
+            background: var(--gold-primary);
+            color: var(--bg-main) !important;
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .menu-btn {
+            display: none;
+            font-size: 24px;
+            color: var(--gold-primary);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 150px 5% 80px;
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-light);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 7vw, 85px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .highlight {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            padding: 18px 45px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--bg-main);
+            background: var(--gold-gradient);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px var(--glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Shared Section Styles */
+        section { padding: 120px 8%; }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: var(--gold-primary);
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Premium Portfolio */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .portfolio-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gold-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .icon-wrapper {
+            width: 70px;
+            height: 70px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-light);
+        }
+
+        .icon-wrapper i {
+            font-size: 30px;
+            color: var(--gold-primary);
+        }
+
+        .portfolio-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* Elite Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+
+        .price-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 30px;
+            padding: 50px 40px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .price-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-5px);
+        }
+
+        .price-card.pro {
+            background: linear-gradient(180deg, rgba(20, 20, 25, 0.9) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 2px solid var(--gold-primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+        }
+
+        .price-card.pro:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold-gradient);
+            color: var(--bg-main);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .plan-name {
+            font-size: 16px;
+            color: var(--gold-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .plan-price {
+            font-size: 55px;
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .plan-price span {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .feature-list li {
+            margin-bottom: 18px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+
+        .feature-list li i {
+            color: var(--gold-primary);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .btn-outline {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            border-radius: 50px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--gold-primary);
+            color: var(--bg-main);
+            border-color: var(--gold-primary);
+        }
+
+        .price-card.pro .btn-outline {
+            background: var(--gold-gradient);
+            color: var(--bg-main);
+            border: none;
+        }
+
+        /* Reviews Section - Scrollable Grid */
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px 15px 10px 0;
+        }
+
+        /* Custom Scrollbar for Reviews */
+        .reviews-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .reviews-container::-webkit-scrollbar-track {
+            background: rgba(20, 20, 25, 0.5);
+            border-radius: 10px;
+        }
+        .reviews-container::-webkit-scrollbar-thumb {
+            background: var(--gold-primary);
+            border-radius: 10px;
+        }
+
+        .review-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .review-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--gold-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--bg-main);
+            font-size: 18px;
+        }
+
+        .reviewer-details h4 {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reviewer-details .stars {
+            color: var(--gold-primary);
+            font-size: 12px;
+        }
+
+        .review-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .faq-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            line-height: 1.4;
+        }
+
+        .faq-question i {
+            color: var(--gold-primary);
+            margin-top: 3px;
+            font-size: 20px;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            padding-left: 35px;
+        }
+
+        /* Free Trial CTA Section */
+        .cta-trial {
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.8) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border: 1px solid var(--gold-primary);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 100px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+        }
+
+        .cta-trial h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .cta-trial p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 80px 8% 40px;
+            text-align: center;
+            background: #020203;
+        }
+
+        footer h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .price-card.pro { transform: scale(1); }
+            .price-card.pro:hover { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(3, 3, 5, 0.95);
+                backdrop-filter: blur(15px);
+                width: 100%;
+                padding: 40px 0;
+                border-bottom: 1px solid var(--border-light);
+            }
+            .nav-links.active { left: 0; }
+            .menu-btn { display: block; }
+            section { padding: 80px 5%; }
+            .cta-trial { padding: 40px 20px; border-radius: 20px; }
+            .cta-trial h2 { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Stock Nexis</div>
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#portfolio">Solutions</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#faq">FAQ</a>
+            <a href="#free-trial">Free Trial</a>
+            <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="nav-btn">Contact Sales</a>
+        </div>
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-badge">Enterprise Grade Software</div>
+        <h1>Elevate Your <span class="highlight">Inventory</span> Infrastructure</h1>
+        <p>Stock Nexis delivers ultra-fast, secure, and custom-engineered business management platforms designed to scale your operations effortlessly.</p>
+        <a href="#pricing" class="btn-primary">View Pricing Plans</a>
+    </section>
+
+    <section id="portfolio">
+        <div class="section-header">
+            <div class="section-subtitle">Our Solutions</div>
+            <h2 class="section-title">Premium Architecture</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="icon-wrapper"><i class="fas fa-gem"></i></div>
+                <h3>Luxury Retail Tracker</h3>
+                <p>High-end inventory logic built for premium retail. Features flawless QR access, real-time deduction algorithms, and stunning A4 thermal print capabilities.</p>
+            </div>
+            <div class="portfolio-card">
+                <div class="icon-wrapper"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3>Pro SaaS Billing</h3>
+                <p>A masterclass in subscription and invoice management. Complete with separated admin/staff roles, cryptographic data security, and zero-lag performance.</p>
+            </div>
+            <div class="portfolio-card">
+                <div class="icon-wrapper"><i class="fas fa-network-wired"></i></div>
+                <h3>Omni-Channel Sync</h3>
+                <p>Enterprise-level cloud dashboard. Watch your business grow globally with multi-store real-time syncing, giving you a comprehensive birds-eye view.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="section-header">
+            <div class="section-subtitle">Investment</div>
+            <h2 class="section-title">Choose Your Scale</h2>
+        </div>
+        <div class="pricing-grid">
+            
+            <div class="price-card">
+                <div class="plan-name">Basic Edition</div>
+                <div class="plan-price">₹299<span>/mo</span></div>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Comprehensive Stock Management</li>
+                    <li><i class="fas fa-check"></i> Lightning-Fast Billing Interface</li>
+                    <li><i class="fas fa-check"></i> Automated Daily Sales Reports</li>
+                    <li><i class="fas fa-check"></i> GST & Non-GST Invoice Generation</li>
+                    <li><i class="fas fa-check"></i> Standard Data Encryption</li>
+                </ul>
+                <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="btn-outline">Purchase Basic</a>
+            </div>
+
+            <div class="price-card pro">
+                <div class="badge">Most Requested</div>
+                <div class="plan-name">Basic+ Edition</div>
+                <div class="plan-price">₹499<span>/mo</span></div>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> <strong style="color: #fff;">Everything in Basic, plus:</strong></li>
+                    <li><i class="fas fa-check"></i> Custom Feature Modifications</li>
+                    <li><i class="fas fa-check"></i> Multi-Device Cloud Login</li>
+                    <li><i class="fas fa-check"></i> Unbreakable Data Security</li>
+                    <li><i class="fas fa-check"></i> <strong>Unlimited Lifetime Storage</strong></li>
+                </ul>
+                <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="btn-outline">Upgrade to Basic+</a>
+            </div>
+
+            <div class="price-card">
+                <div class="plan-name">Pro Enterprise</div>
+                <div class="plan-price">₹699<span>/mo</span></div>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> <strong style="color: #fff;">Maximum Advanced Features</strong></li>
+                    <li><i class="fas fa-check"></i> Multi-Branch Enterprise Sync</li>
+                    <li><i class="fas fa-check"></i> Deep Analytics & AI Insights</li>
+                    <li><i class="fas fa-check"></i> Complete Business Automation</li>
+                    <li><i class="fas fa-check"></i> 24/7 Priority VIP Support</li>
+                </ul>
+                <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="btn-outline">Deploy Pro</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="section-header">
+            <div class="section-subtitle">Client Success</div>
+            <h2 class="section-title">Trusted By Visionaries</h2>
+            <p style="color: var(--text-secondary); margin-top: 10px;">Scroll to see what 10,000+ top Indian businesses say about Stock Nexis.</p>
+        </div>
+        
+        <div class="reviews-container">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">S</div>
+                        <div class="reviewer-details">
+                            <h4>Sharma Electronics 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I've been using this software for 4 months now. It completely transformed our inventory tracking! Pure worth it. No more missing stock issues."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">P</div>
+                        <div class="reviewer-details">
+                            <h4>Priya Desai 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"The Basic+ plan is a steal. Multi-device login means I can check my boutique's sales from home. Absolutely a game-changer for Indian retail!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">G</div>
+                        <div class="reviewer-details">
+                            <h4>Gupta Textiles & Co. 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Our billing speed went up by 500%. We handle hundreds of wholesale customers daily and Stock Nexis has never lagged once. Phenomenal engineering."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-details">
+                            <h4>Amit Patel 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Goodbye to old bulky registers! The dashboard is so beautiful and easy to use, even my elderly staff learned it in 2 days. Highly recommended."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">T</div>
+                        <div class="reviewer-details">
+                            <h4>TechVision Solutions 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"We shifted from a major competitor to Stock Nexis last year. The GST invoice generation is flawless. Hands down the best SaaS platform in India right now."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">M</div>
+                        <div class="reviewer-details">
+                            <h4>Meera Reddy 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Honestly, worth every single rupee. I opted for the Pro Enterprise plan and the VIP support is actually 24/7. They fixed my custom request in hours!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">V</div>
+                        <div class="reviewer-details">
+                            <h4>Verma Mart Superstore 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"We have 4 branches across Delhi. The Multi-Branch Sync works perfectly. It feels like I have eyes everywhere in my business now."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">S</div>
+                        <div class="reviewer-details">
+                            <h4>Singh Auto Parts 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Managing thousands of tiny spare parts used to be a nightmare. Stock Nexis organized everything perfectly. We boosted our profits purely through better tracking."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">K</div>
+                        <div class="reviewer-details">
+                            <h4>Kiran Rao 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Been on the basic plan for 6 months. It's so cheap for the value they provide. The dark mode UI makes staring at the screen all day much easier!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">D</div>
+                        <div class="reviewer-details">
+                            <h4>Deshmukh Traders 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"We were losing money on expired goods before. The AI insights and automated reports literally saved my wholesale business from going under. Masterpiece software."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">N</div>
+                        <div class="reviewer-details">
+                            <h4>Neha Kapoor 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I run a premium salon and this handles all our inventory and billing. The A4 thermal printing integration is crisp and looks extremely professional to clients."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-details">
+                            <h4>Agarwal Sweets 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"During Diwali rush, our old system used to hang. Stock Nexis handled 5,000+ bills in a single day without a single glitch. Unbelievable server strength!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">M</div>
+                        <div class="reviewer-details">
+                            <h4>Mohan & Sons Hardware 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"10/10 experience. The daily automated sales report sent straight to my phone is my favorite feature. I wake up, check my numbers, and relax."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">K</div>
+                        <div class="reviewer-details">
+                            <h4>Kulkarni Pharma 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Stock Nexis is the most secure software we've used. Cryptographic security is a must in pharma billing, and they deliver it effortlessly."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">C</div>
+                        <div class="reviewer-details">
+                            <h4>Chawla Garments 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I’ve used this for 7 months. The QR code generation for our clothing tags is seamless. Scanning at checkout takes less than a second."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">J</div>
+                        <div class="reviewer-details">
+                            <h4>Joshi Mobile Hub 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"IMEI tracking was so tough before. Now I just type it in and everything pulls up. Best software investment my shop has ever made."</p>
+            </div>
+            
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">R</div>
+                        <div class="reviewer-details">
+                            <h4>Rohan Iyer 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"The dashboard analytics are crazy good. I can literally see which items are my best sellers visually. Helps me plan my purchases perfectly."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">B</div>
+                        <div class="reviewer-details">
+                            <h4>Balaji Supermarket 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Five stars! The separated admin and staff roles ensure my cashiers only see what they need to see. Zero data leaks or theft since we installed it."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">N</div>
+                        <div class="reviewer-details">
+                            <h4>Nambiar Retail 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"We upgraded to the Pro Enterprise last month. Setting up across our 3 cities took just a few hours. Absolutely top-tier support team."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">V</div>
+                        <div class="reviewer-details">
+                            <h4>Vikram Malhotra 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"What I love most is the speed. I don't have to make customers wait in line anymore. Just scan, click, print. Lightning fast billing interface!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">A</div>
+                        <div class="reviewer-details">
+                            <h4>Anita's Boutique 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I've been using this for almost 9 months. Stock Nexis makes me feel like I have a dedicated IT department. It never crashes!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">P</div>
+                        <div class="reviewer-details">
+                            <h4>Patel Distributors 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Total automation. The non-GST to GST invoice switch is a one-click magic trick. Saves my accountant so many headaches at the end of the month."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">R</div>
+                        <div class="reviewer-details">
+                            <h4>Reddy Cosmetics 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"The interface is so premium. It looks like a software from 2030. Everyone who visits my store asks what system I'm using on my monitor."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">K</div>
+                        <div class="reviewer-details">
+                            <h4>Kapoor Furnishings 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Huge inventory lists used to freeze our old computers. With Stock Nexis cloud storage, it's buttery smooth. Cannot imagine doing business without it now."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">D</div>
+                        <div class="reviewer-details">
+                            <h4>Das & Co. Jewelers 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Security was our main concern for jewelry. Their unbreakable data security promise is real. I sleep peacefully knowing my data is locked tight."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">I</div>
+                        <div class="reviewer-details">
+                            <h4>Iyer Book Depo 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"Adding new stock used to take me hours. The bulk upload feature on Stock Nexis did it in literally 2 minutes. Time is money, and this saves a lot of both!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">M</div>
+                        <div class="reviewer-details">
+                            <h4>Malik Sports Arena 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"The fact that it is a cloud platform is amazing. I can access my entire inventory from my iPhone while sitting in a cafe. 100% pure worth it."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">S</div>
+                        <div class="reviewer-details">
+                            <h4>Sanjay Enterprises 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"I requested a custom modification for our unique wholesale margin structure. The team delivered it within a week. Customer service is genuinely elite."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">T</div>
+                        <div class="reviewer-details">
+                            <h4>Tiwari Glass & Plywood 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"4 months running Stock Nexis. My stock mismatch errors went from 15% down to 0%. It forces everything to be organized. Simply brilliant architecture."</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <div class="reviewer-avatar">V</div>
+                        <div class="reviewer-details">
+                            <h4>Venkatesh Rao 🇮🇳</h4>
+                            <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="review-text">"For ₹299/mo, I honestly expected cheap software. I was completely wrong. This rivals foreign software that costs ₹10,000+. Stock Nexis is a powerhouse!"</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="section-header">
+            <div class="section-subtitle">Common Questions</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p style="color: var(--text-secondary); margin-top: 10px;">Everything you need to know about setting up your business with Stock Nexis.</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-clock"></i>
+                    How much time does it take to set up my platform?
+                </div>
+                <div class="faq-answer">
+                    Your custom business platform will be fully set up and ready to use within just 24 hours (1 day). We prioritize rapid onboarding so you can start immediately.
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-credit-card"></i>
+                    Do I have to pay upfront before receiving the software?
+                </div>
+                <div class="faq-answer">
+                    Not at all. We believe in building trust. You will receive access to your web platform first, and payment is only required after successful delivery.
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-shield-alt"></i>
+                    What happens if I am not satisfied with the product?
+                </div>
+                <div class="faq-answer">
+                    We offer a risk-free approach. Take our free trial first without paying a single rupee. If you love it, we are here for you long-term; if not, there is no obligation!
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-star"></i>
+                    How can I share my review or rating?
+                </div>
+                <div class="faq-answer">
+                    Once you purchase a plan and experience the platform, you can share your valuable feedback and rating with us directly via Instagram.
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-lock"></i>
+                    Is my business data secure on the cloud?
+                </div>
+                <div class="faq-answer">
+                    Absolutely. We use industry-standard encryption and strict cryptographic security to ensure your data is accessible only by you and your authorized staff.
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-question">
+                    <i class="fas fa-arrow-up"></i>
+                    Can I upgrade my plan later?
+                </div>
+                <div class="faq-answer">
+                    Yes! You can easily upgrade from the Basic to Basic+ or Pro Enterprise plans at any time as your business scales and you need more advanced features.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="free-trial" class="cta-trial">
+        <h2>Try Your Free Trial</h2>
+        <p>Experience the full power of Stock Nexis risk-free. Transform your operations and see the results instantly.</p>
+        <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="btn-primary">Get Free Trial</a>
+    </div>
+
+    <footer id="contact">
+        <h2>Ready to Dominate Your Market?</h2>
+        <p style="color: var(--text-secondary); margin: 20px 0 40px;">Partner with Stock Nexis to build the ultimate business engine.</p>
+        <a href="https://www.instagram.com/stocknexis/?utm_source=ig_web_button_share_sheet" target="_blank" class="btn-primary" style="display: inline-block;">Get in Touch</a>
+        <p style="margin-top: 60px; color: var(--text-secondary); font-size: 14px;">&copy; 2026 Stock Nexis Software. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        // Add subtle navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(3, 3, 5, 0.9)';
+                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+            } else {
+                nav.style.background = 'rgba(3, 3, 5, 0.7)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
